@@ -1,0 +1,40 @@
+/* Header.css */
+.sample nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: darkgray;
+  }
+  
+  .app-title {
+    cursor: pointer;
+    color: white;
+    flex: 1;
+  }
+  
+  .list-components-header {
+    color: white;
+    cursor: pointer;
+    display: flex;
+    list-style: none;
+  }
+  
+  .navbar-components {
+    padding-left: 20px; /* Adjust spacing between items as needed */
+  }
+  
+  .menu-toggle {
+    display: none;
+    cursor: pointer;
+  }
+  
+  .list-components-header.open {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .list-components-header.open .navbar-components {
+    padding: 10px 0;
+  }
