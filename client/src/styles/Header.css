@@ -1,40 +1,147 @@
-/* Header.css */
 .sample nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: darkgray;
-  }
-  
-  .app-title {
-    cursor: pointer;
-    color: white;
-    flex: 1;
-  }
-  
-  .list-components-header {
-    color: white;
-    cursor: pointer;
-    display: flex;
-    list-style: none;
-  }
-  
-  .navbar-components {
-    padding-left: 20px; /* Adjust spacing between items as needed */
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: darkgray;
+  /* height:60px; */
+}
+
+.app-title {
+  cursor: pointer;
+  color: white;
+  flex: 1;
+}
+
+.list-components-header {
+  color: white;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  list-style: none;
+}
+
+.navbar-components {
+  margin: 0 16px;
+  display: flex;
+  align-items: center;
+  /* padding-left: 20px; */
+}
+
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+}
+
+.list-components-header.open {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.list-components-header.open .navbar-components {
+  padding: 10px 0;
+}
+
+
+
+.profile {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+}
+
+.profile .FaUserCircle {
+  color: #333;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.profile .FaUserCircle:hover {
+  color: #0070f3;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* z-index: 1000; */
+}
+
+/* .profile-dropdown p { */
+/* margin: 0; */
+/* padding: 5px 0; */
+/* color: #333; */
+/* } */
+
+.profile-edit-option{
+  display: flex;
+  align-items: center;
+  color: #0070f3;
+  padding: 5px 0;
+  cursor: pointer;
+}
+.profile-edit-option span{
+  margin-left: 5px;
+}
+
+
+.logout-option {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  color: #f44336;
+  cursor: pointer;
+}
+
+.logout-option span {
+  margin-left: 5px;
+}
+.cart-icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cart-length {
+  position: absolute;
+  top: -8px; /* Adjust to position the badge above the cart icon */
+  right: -8px; /* Adjust to position the badge to the right of the cart icon */
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 2px 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 18px; /* Ensure the badge is circular */
+  height: 18px;
+}
+/* 
+@media (max-width: 768px) {
   .menu-toggle {
+    display: block; 
+  }
+
+  .list-components-header {
     display: none;
-    cursor: pointer;
-  }
-  
-  .list-components-header.open {
-    display: flex;
     flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: white;
     width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
-  
-  .list-components-header.open .navbar-components {
-    padding: 10px 0;
+
+  .navbar-components {
+    margin: 8px 0;
   }
+} */

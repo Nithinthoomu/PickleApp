@@ -1,0 +1,53 @@
+.login-container{
+    max-width: 400px;
+    border-radius: 10px;
+    margin: 50px auto;
+    padding:20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.login-title{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.login-form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.login-form-group{
+    display: flex;
+    flex-direction: column;
+}
+.login-form-label{
+    font-size: 14px;
+    color: #555555;
+    margin-bottom: 5px;
+}
+.login-form-input{
+    font-size: 14px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding: 10px;
+    outline: none;
+}
+.login-form-button{
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgb(34, 34, 107);
+    color: white;
+    cursor: pointer;
+}
+.login-form-register{
+    text-align: center;
+}
+.register-link {
+    color: #007bff; /* Set the desired color */
+    text-decoration: none; /* Remove underline */
+    font-weight: bold; /* Optional: Make it bold */
+  }
+  
+  .register-link:hover {
+    color: #0056b3; /* Change color on hover */
+    text-decoration: underline; /* Optional: Add underline on hover */
+  }
