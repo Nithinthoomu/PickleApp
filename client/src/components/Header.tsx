@@ -1,43 +1,31 @@
 "use client";
 
-<<<<<<< HEAD
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link'; // Import Link component
-import { FaBars } from 'react-icons/fa';
-=======
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import Link from 'next/link';
 import { FaBars, FaUserCircle, FaSignOutAlt, FaEdit, FaShoppingCart, FaClipboardList } from 'react-icons/fa';
 import { AuthContext } from '@/context/AuthContext';
 import { CartContext } from '@/context/CartContext';
 import EditProfileModal from '../components/EditProfileModal';
->>>>>>> koti
 import '../styles/Header.css';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-<<<<<<< HEAD
-=======
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const { user, logout } = useContext(AuthContext);
   const { cart } = useContext(CartContext);
 
   const profileRef = useRef<HTMLLIElement | null>(null);
->>>>>>> koti
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-<<<<<<< HEAD
-=======
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
   };
 
->>>>>>> koti
   const handleResize = () => {
     if (window.innerWidth <= 768) {
       setIsMobile(true);
@@ -47,12 +35,6 @@ function Header() {
     }
   };
 
-<<<<<<< HEAD
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Check initial screen size
-
-=======
   // Close profile dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -70,38 +52,12 @@ function Header() {
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     handleResize();
->>>>>>> koti
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
   return (
-<<<<<<< HEAD
-    <div className='sample'>
-      <nav>
-        <h1 className='app-title'>Pickles APP</h1>
-        {isMobile && (
-          <div className='menu-toggle' onClick={toggleMenu}>
-            <FaBars size={24} /> {/* Use the menu icon */}
-          </div>
-        )}
-        <ul className={`list-components-header ${isMenuOpen ? 'open' : ''}`}>
-          <li className='navbar-components'>
-            <Link href="/">Home</Link>
-          </li>
-          <li className='navbar-components'>
-            <Link href="/register">Register</Link>
-          </li>
-          <li className='navbar-components'>
-            <Link href="/signin">Signin</Link>
-          </li>
-          <li className='navbar-components'>
-            <Link href="/about">About</Link>
-          </li>
-        </ul>
-      </nav>
-=======
     <div className="header-main">
       <nav>
         <h1 className="app-title">Pickles APP</h1>
@@ -169,7 +125,6 @@ function Header() {
         </ul>
       </nav>
       {isEditProfileOpen && <EditProfileModal onClose={() => setIsEditProfileOpen(false)} />}
->>>>>>> koti
     </div>
   );
 }

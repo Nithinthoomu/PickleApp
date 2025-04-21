@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import Header from "@/components/Header";
-import Image from "next/image";
-
-export default function Home() {
-  return (
-    <div>
-      <Header />
-      <h1>hello</h1>
-    </div>
-  );
-}
-=======
 "use client";
 
 import React, { useEffect, useState, useContext } from "react";
@@ -153,4 +140,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
->>>>>>> koti
