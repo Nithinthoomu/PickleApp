@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import Link from 'next/link';
-import { FaBars, FaUserCircle, FaSignOutAlt, FaEdit, FaShoppingCart } from 'react-icons/fa';
+import { FaBars, FaUserCircle, FaSignOutAlt, FaEdit, FaShoppingCart, FaClipboardList } from 'react-icons/fa';
 import { AuthContext } from '@/context/AuthContext';
 import { CartContext } from '@/context/CartContext';
 import EditProfileModal from '../components/EditProfileModal';
@@ -51,7 +51,7 @@ function Header() {
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
-    handleResize(); 
+    handleResize();
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -109,6 +109,7 @@ function Header() {
 
                   <div className="user-orders">
                     <Link href="/orders" className="profile-edit-option">
+                      <FaClipboardList size={16} />
                       <span>My Orders</span>
                     </Link>
                   </div>
