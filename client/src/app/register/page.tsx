@@ -40,7 +40,6 @@ export default function Register() {
             setPasswordError("Passwords didn't match");
             return;
           }
-        // console.log("Form submitted", formData)
         try{
             const response=await fetch("http://localhost:5000/register", {
                 method: "POST",
@@ -51,12 +50,8 @@ export default function Register() {
             })
             const data = await response.json()
             if(response.ok && data.success){
-                // setMessage(data.message)
                 toast.success("Registration successful" ,{autoClose:5000,onClick:()=>router.push('/signin')})
                 setFormData({username:"",email:"",password:"",confirmPassword:""})
-                // setTimeout(()=>{
-                //     router.push('/signin')
-                // },5000)
             }else if(data.message==='User already exists'){
                 toast.warn('User already registered', {autoClose: 5000})
 
@@ -66,16 +61,12 @@ export default function Register() {
 
         }catch(error){
             toast.error('Something went wrong. please try again', {autoClose: 5000})
-            // console.log("Error during registering", error)
-            // setMessage("An error occurred while registering.")
-
         }
     };
 
     return (
         <div className="register-container">
             <h1 className="register-title">Register</h1>
-            {/* {message && <p className="register-message">{message}</p>} */}
             <form className="register-form" onSubmit={handleSubmit}>
                 <div className="register-form-group">
                     <label htmlFor="username" className="register-form-label">Username:</label>

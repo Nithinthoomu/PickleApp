@@ -5,7 +5,7 @@ import { AuthContext } from '@/context/AuthContext';
 import '@/styles/OrdersPage.css';
 
 const OrdersPage = () => {
-    const { user } = useContext(AuthContext); // Get the logged-in user's details
+    const { user } = useContext(AuthContext);
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -49,6 +49,7 @@ const OrdersPage = () => {
                         <th>Date</th>
                         <th>Items</th>
                         <th>Shipping Address</th>
+                        <th>Payment Method</th>
                         <th>Total Amount</th>
 
                     </tr>
@@ -77,7 +78,6 @@ const OrdersPage = () => {
                                             <p style={{ marginLeft: "16px" }}>
                                                 <strong>Total:</strong> {item.currency} {item.quantity * item.selectedPrice}
                                             </p>
-                                            {/* {item.name} (Type: {item.type}, Size: {item.selectedSize}, Qty: {item.quantity}, Price: {item.currency} {item.selectedPrice}, Total Price:{item.currency} {item.quantity*item.selectedPrice}) */}
                                         </li>
                                     ))}
                                 </ul>
@@ -90,6 +90,8 @@ const OrdersPage = () => {
                                 <p><strong>Zip:</strong> {order.address.zip}</p>
                                 <p><strong>Phone:</strong> {order.address.phone}</p>
                             </td>
+                            <td>{order.paymentMethod}</td>
+
                             <td>{order.currency} {order.totalAmount}</td>
 
                         </tr>

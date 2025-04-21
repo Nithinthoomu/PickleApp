@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useEffect, useState, useContext } from "react";
-import "../styles/HomePage.css"; // Import your CSS file for styling
+import "../styles/HomePage.css";
+import { toast,ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from '../context/AuthContext';
-import { CartContext } from '../context/CartContext'; // Import CartContext if needed
+import { CartContext } from '../context/CartContext';
 
 interface Product {
   id: number;
@@ -20,14 +22,14 @@ const HomePage = () => {
   const [filterType, setFilterType] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const { user } = useContext(AuthContext);
-  const { addToCart } = useContext(CartContext);
+  const { cart,addToCart } = useContext(CartContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/products"); // Replace with your backend URL
+        const response = await fetch("http://localhost:5000/products");
         const data = await response.json();
-        setProducts(data); // Set the fetched products
+        setProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -45,15 +47,20 @@ const HomePage = () => {
 
   const handleAddToCart = (product:Product) => {
     if (!user) {
-      console.log("Please sign in to add items to the cart.");
+      toast.error("Please sign in to add items to the cart.",)
       return;
     }
 
     const selectedSize = selectedQuantities[product.id] || product.quantities[0].size;
     const selectedPrice = product.quantities.find((q) => q.size === selectedSize)?.price || 0;
-    addToCart({ ...product, selectedSize, selectedPrice, quantity: 1 });
 
-    console.log(`Product ${product.id} added to cart`);
+    const itemExists=cart.some((cartItem:any)=>cartItem.id===product.id && cartItem.selectedSize===selectedSize);
+    if(itemExists){
+      toast.error("Item already exists in the cart");
+      return;
+    }
+    addToCart({ ...product, selectedSize, selectedPrice, quantity: 1 });
+    toast.success("Item successfully added to cart!")
   };
 
   const filteredProducts = products.filter((product) => {
@@ -127,6 +134,7 @@ const HomePage = () => {
           <p className="no-products-message">There are no products matching your search and filter criteria.</p>
         )}
       </div>
+      <ToastContainer/>
     </div>
   );
 };

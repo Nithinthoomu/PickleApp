@@ -8,6 +8,12 @@
     margin-bottom: 20px;
     color: #333;
 }
+.cart-page p {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+}
+
 
 .cart-item {
     display: flex;
@@ -75,56 +81,78 @@
     margin-top: 20px;
     color: #333;
 }
-
-.address-form {
+.saved-address {
     margin-top: 20px;
-}
-
-.address-form h3 {
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.address-form form div {
-    margin-bottom: 10px;
-}
-
-.address-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333;
-}
-
-.address-form input {
-    width: 100%;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.saved-address h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.saved-address p {
+    margin: 5px 0;
+    color: #555;
     font-size: 16px;
 }
 
-.buy-now-button {
-    display: block;
-    padding: 10px;
+
+.payment-methods {
     margin-top: 20px;
-    background-color: #28a745;
-    color: white;
-    font-size: 18px;
-    border: none;
-    border-radius: 4px;
+    text-align: center;
+}
+
+.payment-methods h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.payment-method-options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+    /* align-items: center; */
+    gap: 15px;
+}
+
+.payment-method-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
     cursor: pointer;
+    transition: all 0.3s ease;
+    width: 150px;
     text-align: center;
+    position: relative;
 }
 
-.buy-now-button:hover {
-    background-color: #218838;
+.payment-method-label input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
 }
 
-.cart-page p {
-    text-align: center;
-    font-size: 18px;
-    color: #555;
+.payment-method-label:hover {
+    background-color: #e0e0e0;
+    border-color: #888;
+}
+
+.payment-method-label.selected {
+    background-color: #4caf50;
+    color: #fff;
+    border-color: #4caf50;
+    font-weight: bold;
 }
 
 .cart-actions {
@@ -132,18 +160,6 @@
     justify-content: space-between;
     margin-top: 20px;
 }
-
-.select-address-button,
-.buy-now-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    width: 48%;
-}
-
 .select-address-button {
     background-color: #007bff;
     color: white;
@@ -163,14 +179,35 @@
 }
 
 .buy-now-button {
+    display: block;
+    padding: 10px;
+    margin-top: 20px;
     background-color: #28a745;
     color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
 }
 
 .buy-now-button:hover {
     background-color: #218838;
 }
-
+.buy-now-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+.select-address-button,
+.buy-now-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    width: 48%;
+}
 .address-modal {
     display: flex;
     justify-content: center;
@@ -178,28 +215,21 @@
     position: fixed;
     top: 0;
     left: 0;
-    /* transform: translate(-50%, -50%); */
     width: 100%;
     height: 100%;
-    /* border-radius: 8px; */
-    /* box-shadow: 0 4px 6px rgba(0,0,0,0.1); */
-    /* height: 100%; */
-    /* max-height: 80%; */
-    /* max-width: 420px; */
-    background-color:rgba(0, 0, 0, 0.5);
-    /* overflow-y: auto; */
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
 }
 
 .address-modal-content {
-    max-height: 80vh; /* Limit the height of the modal to 80% of the viewport height */
-    overflow-y: auto; /* Enable vertical scrolling inside the modal */
+    max-height: 80vh;
+    overflow-y: auto;
     padding: 16px;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #fff;
-    width: 90%; /* Adjust width for responsiveness */
-    max-width: 500px; /* Limit the maximum width */
+    width: 90%;
+    max-width: 500px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -207,74 +237,19 @@
     margin-bottom: 20px;
     text-align: center;
 }
-
 .address-modal-content form div {
     margin-bottom: 10px;
 }
-
 .address-modal-content label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
 }
-
 .address-modal-content input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-}
-
-.modal-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-.close-modal-button,
-.save-address-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.close-modal-button {
-    background-color: #dc3545;
-    color: white;
-}
-
-.close-modal-button:hover {
-    background-color: #c82333;
-}
-
-.save-address-button {
-    background-color: #007bff;
-    color: white;
-}
-
-.save-address-button:hover {
-    background-color: #0056b3;
-}
-
-.saved-address {
-    margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-.saved-address h3 {
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.saved-address p {
-    margin: 5px 0;
-    color: #555;
-    font-size: 16px;
 }
 .phone-input-container {
     display: flex;
@@ -297,12 +272,48 @@
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
 .phone-input-container input {
     flex: 2;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.close-modal-button {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.close-modal-button:hover {
+    background-color: #c82333;
+}
 
 
+.save-address-button {
+    background-color: #007bff;
+    color: white;
+}
 
+.save-address-button:hover {
+    background-color: #0056b3;
+}
+
+.close-modal-button,
+.save-address-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

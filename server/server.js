@@ -111,6 +111,10 @@ const orderSchema=new Schema({
     type:String,
     required:true,
   },
+  paymentMethod:{
+    type:String,
+    required:true,
+  },
   date:{
     type:Date,
     default:Date.now,
@@ -130,8 +134,8 @@ app.get('/products', async (_req, res) => {
 });
 
 app.post('/orders',async(req,res)=>{
-  const {userEmail,items,address,totalAmount,currency}=req.body;
-  if(!userEmail || !items || !address || !totalAmount || !currency){
+  const {userEmail,items,address,totalAmount,currency,paymentMethod}=req.body;
+  if(!userEmail || !items || !address || !totalAmount || !currency || !paymentMethod){
     return res.status(400).json({message:"All fields are required"})
   }
   try{
@@ -141,6 +145,7 @@ app.post('/orders',async(req,res)=>{
       address,
       totalAmount,
       currency,
+      paymentMethod,
       date:new Date(),
     })
     await newOrder.save();

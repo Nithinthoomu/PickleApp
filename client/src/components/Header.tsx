@@ -16,7 +16,7 @@ function Header() {
   const { user, logout } = useContext(AuthContext);
   const { cart } = useContext(CartContext);
 
-  const profileRef = useRef<HTMLLIElement | null>(null); // Reference for the profile dropdown
+  const profileRef = useRef<HTMLLIElement | null>(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -51,20 +51,19 @@ function Header() {
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
-    handleResize(); // Check initial screen size
-
+    handleResize(); 
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
   return (
-    <div className="sample">
+    <div className="header-main">
       <nav>
         <h1 className="app-title">Pickles APP</h1>
         {isMobile && (
           <div className="menu-toggle" onClick={toggleMenu}>
-            <FaBars size={24} /> {/* Use the menu icon */}
+            <FaBars size={24} />
           </div>
         )}
         <ul className={`list-components-header ${isMenuOpen ? 'open' : ''}`}>
@@ -89,7 +88,6 @@ function Header() {
               <Link href="/cart" className='cart-icon-container'>
                 <FaShoppingCart size={24} />
                 {cart.length > 0 && <span className="cart-length">{cart.length}</span>}
-                {/* <span className="cart-length">{cart.length}</span> */}
               </Link>
             </li>
           )}

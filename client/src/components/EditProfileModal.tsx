@@ -24,7 +24,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ onClose }) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    id: user._id, // Include user ID
+                    id: user._id,
                     username,
                     email
                 })

@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useRouter} from 'next/navigation';
 import Link from 'next/link';
 import { ToastContainer,toast } from 'react-toastify';
@@ -39,9 +38,6 @@ function Signin() {
         })
         setEmail('')
         setPassword('')
-        // setTimeout(()=>{
-        //     router.push('/')
-        // },5000)
       }else{
         toast.error(data.message,{autoClose:5000});
       }

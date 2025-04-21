@@ -4,10 +4,11 @@ import React, { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '@/context/AuthContext';
 import { CartContext } from '@/context/CartContext';
-import { OrdersContext } from '@/context/OrdersContext';
 import { ToastContainer, toast } from 'react-toastify';
+import '../../styles/CartPage.css';
 import 'react-toastify/dist/ReactToastify.css';
 import '@/styles/CartPage.css';
+
 
 const countries = [
     { name: 'United States', code: '+1' },
@@ -15,9 +16,9 @@ const countries = [
     { name: 'United Kingdom', code: '+44' },
     { name: 'Australia', code: '+61' },
     { name: 'Canada', code: '+1' },
-    // Add more countries as needed
 ];
 
+const paymentMethods = ["GPay", "PhonePe", "Paytm", "Cash on Delivery"];
 
 const CartPage = () => {
     const router = useRouter();
@@ -29,11 +30,13 @@ const CartPage = () => {
         city: '',
         state: '',
         zip: '',
-        phone:'',
+        phone: '',
     });
     const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
     const [isAddressSaved, setIsAddressSaved] = useState(false);
-    const [selectedCountry, setSelectedCountry] = useState(countries[0]); // Default to the first country
+    const [selectedCountry, setSelectedCountry] = useState(countries[0]);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+    const [isPaymentCompleted, setIsPaymentCompleted] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState('');
     const [errorMessage, setErrorMessage] = useState('')
 
@@ -42,26 +45,22 @@ const CartPage = () => {
         setSelectedCountry(country);
         setAddress((prevAddress) => ({
             ...prevAddress,
-            phone: `${country.code} ${phoneNumber}`, // Concatenate the new country code with the current phone number
+            phone: `${country.code} ${phoneNumber}`,
         }));
     };
 
     const handlePhoneNumberChange = (e) => {
         const value = e.target.value;
-
-        // Allow only numeric input
         if (!/^\d*$/.test(value)) {
             return;
         }
-
-        // Restrict to 10 digits
         if (value.length > 10) {
             return;
         }
         setPhoneNumber(value);
         setAddress((prevAddress) => ({
             ...prevAddress,
-            phone: `${selectedCountry.code}${value}`, 
+            phone: `${selectedCountry.code}${value}`,
         }));
         if (value.length < 10) {
             setErrorMessage('Enter a valid phone number');
@@ -91,11 +90,11 @@ const CartPage = () => {
             toast.error("Please fill in all address fields.");
             return;
         }
-        console.log("Address before saving:", address); // Debugging: Log the address before saving
+        console.log("Address before saving:", address);
         setIsAddressSaved(true);
         setIsAddressModalOpen(false);
         toast.success("Address saved successfully.");
-        console.log("Address saved successfully. isAddressSaved:", isAddressSaved); // Debugging: Log the state
+        console.log("Address saved successfully. isAddressSaved:", isAddressSaved);
     };
 
     const handleBuyNow = async () => {
@@ -105,6 +104,10 @@ const CartPage = () => {
         }
         if (!user || !user.email) {
             toast.error("User email is not available. Please log in.");
+            return;
+        }
+        if (!selectedPaymentMethod) {
+            toast.error("Please select a payment method.");
             return;
         }
         const formattedItems = cart.map((item) => ({
@@ -120,14 +123,15 @@ const CartPage = () => {
             id: Date.now(),
             date: new Date(),
             items: formattedItems,
-            address:{
+            address: {
                 ...address,
-                phone:`${selectedCountry.code} ${phoneNumber}`,
+                phone: `${selectedCountry.code} ${phoneNumber}`,
             },
             totalAmount: cart.reduce((total, item) => total + item.selectedPrice * item.quantity, 0),
-            currency: cart[0].currency,
+            currency: cart[0].currency || 'USD',
+            paymentMethod: selectedPaymentMethod,
         };
-        console.log("Order before sending:", order); // Debugging: Log the order before sending
+        console.log("Order before sending:", order);
         try {
             const response = await fetch('http://localhost:5000/orders', {
                 method: 'POST',
@@ -151,6 +155,12 @@ const CartPage = () => {
     };
 
     const totalAmount = cart.reduce((total, item) => total + item.selectedPrice * item.quantity, 0);
+
+    const handlePaymentMethodSelection = (method) => {
+        setSelectedPaymentMethod(method);
+        setIsPaymentCompleted(true);
+        toast.success(`${method} selected. You can place your order.`);
+    }
 
     return (
         <div className="cart-page">
@@ -187,11 +197,33 @@ const CartPage = () => {
                             <p><strong>Zip Code:</strong> {address.zip}</p>
                         </div>
                     )}
+                    {isAddressSaved && (
+                        <div className="payment-methods">
+                            <h3>Select Payment Method</h3>
+                            <div className="payment-method-options">
+                                {paymentMethods.map((method) => (
+                                    <label
+                                        key={method}
+                                        className={`payment-method-label ${selectedPaymentMethod === method ? 'selected' : ''}`}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name="paymentMethod"
+                                            value={method}
+                                            checked={selectedPaymentMethod === method}
+                                            onChange={() => handlePaymentMethodSelection(method)}
+                                        />
+                                        {method}
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                     <div className="cart-actions">
                         <button onClick={() => setIsAddressModalOpen(true)} className="select-address-button">
                             Select Address
                         </button>
-                        <button onClick={handleBuyNow} className="buy-now-button">
+                        <button onClick={handleBuyNow} className="buy-now-button" disabled={!isAddressSaved || !selectedPaymentMethod}>
                             Buy Now
                         </button>
                     </div>
@@ -216,20 +248,6 @@ const CartPage = () => {
                                     required
                                 />
                             </div>
-                            {/* <div>
-                                <label htmlFor="country">Country:</label>
-                                <select
-                                    id="country"
-                                    value={selectedCountry.name}
-                                    onChange={handleCountryChange}
-                                >
-                                    {countries.map((country) => (
-                                        <option key={`${country.code}-${country.name}`} value={country.name}>
-                                            {country.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div> */}
                             <div>
                                 <label htmlFor="phone">Phone Number:</label>
                                 <div className='phone-input-container'>
@@ -243,7 +261,7 @@ const CartPage = () => {
                                             borderRadius: '4px',
                                             backgroundColor: '#fff',
                                             appearance: 'auto',
-                                            flex:'1',
+                                            flex: '1',
                                         }}
                                     >
                                         {countries.map((country) => (
@@ -330,7 +348,6 @@ const CartPage = () => {
                     </div>
                 </div>
             )}
-
             <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
         </div>
     );
